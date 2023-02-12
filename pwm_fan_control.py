@@ -24,11 +24,11 @@ while True:
                time.sleep(1)
                continue
 
-     for temp_threshold, duty in temp_duty_pairs:
-          if temp > temp_threshold:
-               pwm.set_PWM_dutycycle(servo, duty)
-               break
-     time.sleep(1)
+          for temp_threshold, duty in temp_duty_pairs:
+               if temp > temp_threshold:
+                    pwm.set_PWM_dutycycle(servo, duty)
+                    break
+          time.sleep(1)
 
      except KeyboardInterrupt:
           print("Exiting Servo Temperature Control Service...")
