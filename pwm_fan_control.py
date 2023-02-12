@@ -11,11 +11,14 @@ pwm.set_PWM_frequency( servo, 25000 )
 pwm.set_PWM_range(servo, 100)
 while True:
      try:
-          # get CPU temp
-          file = open("/sys/class/thermal/thermal_zone0/temp")
-          temp = float(file.read()) / 1000.00
-          temp = float('%.2f' % temp)
-          file.close()
+          try:
+               with open("/sys/class/thermal/thermal_zone0/temp") as file:
+                    temp = float(file.read()) / 1000.00
+                    temp = float('%.2f' % temp)
+          except:
+               print("Failed to read temperature, retrying in 1 second...")
+               time.sleep(1)
+               continue
 
           if(temp > 30):
                pwm.set_PWM_dutycycle(servo, 40)
